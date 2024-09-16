@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>プログラミングI 提出作品</title>
+    <meta charset="UTF-8">
+    <base target="_top">
+     <style>
+        p{
+            color: black;
+        }
+        body{
+            background-color:whitesmoke;
+        }
+
+        
+        div.container{
+          display: flex;
+          background-color:white;
+          padding:20px;
+          margin:30px 10px;
+        }
+
+        div.opWork{
+            width:420px;
+            margin:5px;
+        }
+    
+        
+        div.name{
+            margin:5px;
+            padding:20px;
+        }
+
+        div.std_id{
+            margin:5px;
+            padding:20px;
+        }
+
+        div.comment{
+            margin:5px;
+            padding:20px;
+        }
+
+    </style>
+  </head>
+
+
+<body>
+    <h1>プログラミング1</h1>
+    
+ <p>2024/5/9</p>
+<p>提出作品一覧</p>
+<div id ="interface">
+<button onclick="prevButton()">前の10作品</button>
+<button onclick="nextButton()">次の10作品</button>
+</div>
+
+<div id = "myListBlockID"></div>
+
+<div id ="interface_bottom">
+<button onclick="prevButton()">前の10作品</button>
+<button onclick="nextButton()">次の10作品</button>
+</div>
+
+</body>
+
+
+
+ <script>
+
+    var workCount;//表示を始める作品の番号、ここからカウントダウンしていく
+    var workData;
+
+    google.script.run.withSuccessHandler(drawWork).getWorkListData();
+
+
+    function drawWork(workList){
+      //alert('function drawWork');
+      document.getElementById('interface').style.backgroundColor = 'skyblue';
+      //console.log(workList);
+      /*for(var i=0;i<workList.length ;i++){
+        console.log(i);
+      }*/
+     // workData = workList;
+     workData = workList.slice();
+      workCount=workList.length-1;
+      workDraw();
+    }
+
+    function nextButton() {
+      //alert('ボタンが押されました');
+      document.getElementById('interface').style.backgroundColor = 'skyblue';
+      workCount = workCount - 10;
+      workDraw();
+    }
+
+    function prevButton() {
+      //alert('ボタンが押されました');
+      document.getElementById('interface').style.backgroundColor = 'skyblue';
+      workCount = workCount + 10;
+      if (workCount > workData.length) workCount = workData.length;
+      workDraw();
+    }
+
+
+    //作品の描画、10個づつ表示する。
+    function workDraw(){
+
+
+      var max = workCount;
+      var min = workCount - 10;
+      if (min<0) min = 0;
+
+      var outputHTML = "";
+
+      for(var i=max; i>min; i--){
+          console.log(i,workData[i]);
+          //作品の表示
+
+          outputHTML += '<div class="container">';
+
+          outputHTML += '<div class="opWork">';
+          outputHTML += workData[i][2];
+          outputHTML += '</div>';
+
+          outputHTML += '<div class="info">';
+
+          outputHTML += '<div class="std_id">';
+          outputHTML += workData[i][0];
+          outputHTML += "</div>";
+
+          outputHTML += '<div class="name">';
+          outputHTML += workData[i][1];
+          outputHTML += "</div>";
+
+          outputHTML += '<div class="comment">';
+          outputHTML += workData[i][3];
+          outputHTML += "</div>";
+
+          outputHTML += "</div>";//info
+          outputHTML += "</div>";//container
+        }//for loop
+        console.log(outputHTML);
+        document.getElementById('myListBlockID').innerHTML = outputHTML;
+
+    }
+  
+/*
+
+    //console.log(data);
+    //output.append(data);
+    //var dataStart = data.length-1;
+    //var dataEnd = dataStart -10;
+
+
+
+    function setData2html(){
+      var listBlock = document.getElementById('myListBlockID');
+
+      for(var i=dataStart;i>dataEnd;i--){
+          var iFrameSrc = data[i][4];
+          //var w = data[i][4];
+          //var h = data[i][5]+40;
+          //var iFrameSize = ' width="' + w + 'px" height="' + h +  'px"></iframe>';
+          //文字の置き換え　"></iframe>"を　iFrameSizeに置き換える
+          //var iFrameCode = iFrameSrc.replace("></iframe>", iFrameSize);
+
+          var outputSrc = '<div class="container">';
+          output.append(outputSrc);
+          output.append(iFrameSrc);
+
+          outputSrc = '<div class="info">';
+          output.append(outputSrc);
+
+          outputSrc = '<div class="std_id">';
+          output.append(outputSrc);
+
+          output.append(data[i][2]);
+          outputSrc = "</div>";
+          output.append(outputSrc);
+
+          outputSrc = '<div class="name">';
+          output.append(outputSrc);
+          output.append(data[i][3]);
+          outputSrc = "</div>";
+          output.append(outputSrc);
+
+          outputSrc = '<div class="comment">';
+          output.append(outputSrc);
+          output.append(data[i][5]);
+          outputSrc = "</div>";
+          output.append(outputSrc);
+
+          outputSrc = "</div>"
+          output.append(outputSrc);
+
+          outputSrc = "</div>"
+          output.append(outputSrc);
+        }//for loop
+
+        listBlock.innerHTML = outputSrc;
+      }
+*/
+
+</script>
+
+
+  
+</html>
+
+
